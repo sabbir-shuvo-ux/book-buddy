@@ -6,6 +6,12 @@ body {
   font-family: var(--font-inter);
 }
 
+html,
+body,
+:root {
+  @apply h-full;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -74,5 +80,9 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  main {
+    @apply bg-off_white;
   }
 }

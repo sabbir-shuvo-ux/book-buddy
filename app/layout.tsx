@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Toaster } from "react-hot-toast";
+import "./globals.css";
+import TopNavbar from "@/components/header/TopNavbar";
 
 export const metadata: Metadata = {
   title: "BookBuddy",
@@ -24,11 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
-        <header>
-          <Button asChild>
-            <Link href={"/"}>Home</Link>
-          </Button>
-        </header>
+        <TopNavbar />
         <main>{children}</main>
         <Toaster />
       </body>

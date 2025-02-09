@@ -49,4 +49,4 @@ const Logout = async () => {
   await signOut({ redirectTo: "/login" });
 };
 
-export { SignUp, Login, Logout };
+export { Login, Logout, SignUp };
