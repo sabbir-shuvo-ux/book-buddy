@@ -7,14 +7,13 @@ import { useForm } from "react-hook-form";
 import { AuthFormSchema, AuthFormSchemaType } from "@/schemas/authSchema";
 
 // components
+import { Login, SignUp } from "@/actions/authActions";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
-import { Login, SignUp } from "@/actions/authActions";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { signIn } from "@/lib/auth";
 
 type Props = {
   actionType: "LOGIN" | "SIGNUP";
