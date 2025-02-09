@@ -7,15 +7,21 @@ import { useForm } from "react-hook-form";
 import { AuthFormSchema, AuthFormSchemaType } from "@/schemas/authSchema";
 
 // components
+import { Login, SignUp } from "@/actions/authActions";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 type Props = {
   actionType: "LOGIN" | "SIGNUP";
 };
 
 const AuthForm = ({ actionType }: Props) => {
+  const router = useRouter();
+
   // initialize form.
   const form = useForm<AuthFormSchemaType>({
     resolver: zodResolver(AuthFormSchema),
@@ -26,10 +32,34 @@ const AuthForm = ({ actionType }: Props) => {
   });
 
   // handle form submit
-  function onSubmit(values: AuthFormSchemaType) {
-    console.log(actionType);
-    console.log(values);
+  async function onSubmit(values: AuthFormSchemaType) {
+    if (actionType === "SIGNUP") {
+      const res = await SignUp(values);
+
+      if (!res.success) {
+        toast.error(res.message);
+      } else {
+        toast.success("Awesome! Your account is ready.");
+        router.push("/login");
+      }
+    } else if (actionType === "LOGIN") {
+      const res = await Login(values);
+
+      if (!res.success) {
+        toast.error(res.message);
+        console.log(res.message);
+      } else {
+        toast.success("Success");
+        router.push("/");
+      }
+    }
   }
+
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      form.reset();
+    }
+  }, [form, form.formState.isSubmitSuccessful]);
 
   return (
     <Form {...form}>
@@ -52,7 +82,15 @@ const AuthForm = ({ actionType }: Props) => {
           label="Password"
           type="password"
         />
-        <Button type="submit">Submit</Button>
+        <Button disabled={form.formState.isSubmitting} type="submit">
+          {form.formState.isSubmitting
+            ? actionType === "SIGNUP"
+              ? "Setting Things Up..."
+              : "Signing In..."
+            : actionType === "SIGNUP"
+            ? "Create Your Profile"
+            : "Sign In"}
+        </Button>
       </form>
     </Form>
   );
