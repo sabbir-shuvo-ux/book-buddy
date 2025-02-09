@@ -1,10 +1,12 @@
 "use server";
 
+import { signIn, signOut } from "@/lib/auth";
 import { executeAction } from "@/lib/executeAction";
 import { prisma } from "@/lib/prisma";
 import { AuthFormSchema, AuthFormSchemaType } from "@/schemas/authSchema";
 import bcryptjs from "bcryptjs";
 
+// sign up
 const SignUp = async (data: AuthFormSchemaType) => {
   return executeAction({
     actionFn: async () => {
@@ -28,4 +30,23 @@ const SignUp = async (data: AuthFormSchemaType) => {
   });
 };
 
-export { SignUp };
+// login
+const Login = async (data: AuthFormSchemaType) => {
+  return await executeAction({
+    actionFn: async () => {
+      const res = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+
+      return res;
+    },
+  });
+};
+
+// logout
+const Logout = async () => {
+  await signOut({ redirectTo: "/login" });
+};
+
+export { SignUp, Login, Logout };

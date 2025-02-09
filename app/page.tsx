@@ -1,3 +1,4 @@
+import LogoutButton from "@/components/LogoutButton";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
@@ -7,7 +8,12 @@ const HomePage = async () => {
   console.log(session);
   return (
     <div className="grid gap-8">
-      <h2>Hello This is Landing Page</h2>
+      <h2>Hello This is Landing Page {session?.user?.email}</h2>
+
+      <div className="my-8">
+        <LogoutButton />
+      </div>
+
       <div className="flex gap-4">
         <Button asChild>
           <Link href={"/login"}>Login</Link>

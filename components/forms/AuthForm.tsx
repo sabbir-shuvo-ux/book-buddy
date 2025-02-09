@@ -10,10 +10,11 @@ import { AuthFormSchema, AuthFormSchemaType } from "@/schemas/authSchema";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
-import { SignUp } from "@/actions/authActions";
+import { Login, SignUp } from "@/actions/authActions";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { signIn } from "@/lib/auth";
 
 type Props = {
   actionType: "LOGIN" | "SIGNUP";
@@ -35,13 +36,23 @@ const AuthForm = ({ actionType }: Props) => {
   async function onSubmit(values: AuthFormSchemaType) {
     if (actionType === "SIGNUP") {
       const res = await SignUp(values);
-      console.log(res.message);
-      if (res.success) {
+
+      if (!res.success) {
+        toast.error(res.message);
+      } else {
         toast.success("Awesome! Your account is ready.");
         router.push("/login");
       }
+    } else if (actionType === "LOGIN") {
+      const res = await Login(values);
 
-      toast.error(res.message);
+      if (!res.success) {
+        toast.error(res.message);
+        console.log(res.message);
+      } else {
+        toast.success("Success");
+        router.push("/");
+      }
     }
   }
 
