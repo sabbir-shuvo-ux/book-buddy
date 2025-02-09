@@ -27,6 +27,7 @@ const AuthForm = ({ actionType }: Props) => {
 
   // handle form submit
   function onSubmit(values: AuthFormSchemaType) {
+    console.log(actionType);
     console.log(values);
   }
 
