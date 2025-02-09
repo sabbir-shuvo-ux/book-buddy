@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
 
-const HomePage = async () => {
+const LandingPage = async () => {
   const session = await auth();
   console.log(session);
   return (
@@ -26,4 +26,4 @@ const HomePage = async () => {
   );
 };
 
-export default HomePage;
+export default LandingPage;
