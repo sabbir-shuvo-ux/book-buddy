@@ -10,12 +10,18 @@ import { AuthFormSchema, AuthFormSchemaType } from "@/schemas/authSchema";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
+import { SignUp } from "@/actions/authActions";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 type Props = {
   actionType: "LOGIN" | "SIGNUP";
 };
 
 const AuthForm = ({ actionType }: Props) => {
+  const router = useRouter();
+
   // initialize form.
   const form = useForm<AuthFormSchemaType>({
     resolver: zodResolver(AuthFormSchema),
@@ -26,10 +32,24 @@ const AuthForm = ({ actionType }: Props) => {
   });
 
   // handle form submit
-  function onSubmit(values: AuthFormSchemaType) {
-    console.log(actionType);
-    console.log(values);
+  async function onSubmit(values: AuthFormSchemaType) {
+    if (actionType === "SIGNUP") {
+      const res = await SignUp(values);
+      console.log(res.message);
+      if (res.success) {
+        toast.success("Awesome! Your account is ready.");
+        router.push("/login");
+      }
+
+      toast.error(res.message);
+    }
   }
+
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      form.reset();
+    }
+  }, [form, form.formState.isSubmitSuccessful]);
 
   return (
     <Form {...form}>
@@ -52,7 +72,15 @@ const AuthForm = ({ actionType }: Props) => {
           label="Password"
           type="password"
         />
-        <Button type="submit">Submit</Button>
+        <Button disabled={form.formState.isSubmitting} type="submit">
+          {form.formState.isSubmitting
+            ? actionType === "SIGNUP"
+              ? "Setting Things Up..."
+              : "Signing In..."
+            : actionType === "SIGNUP"
+            ? "Create Your Profile"
+            : "Sign In"}
+        </Button>
       </form>
     </Form>
   );
