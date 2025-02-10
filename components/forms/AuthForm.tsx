@@ -2,6 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 // schema
 import { AuthFormSchema, AuthFormSchemaType } from "@/schemas/authSchema";
@@ -11,9 +14,6 @@ import { Login, SignUp } from "@/actions/authActions";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import toast from "react-hot-toast";
 
 type Props = {
   actionType: "LOGIN" | "SIGNUP";
@@ -33,28 +33,28 @@ const AuthForm = ({ actionType }: Props) => {
 
   // handle form submit
   async function onSubmit(values: AuthFormSchemaType) {
-    if (actionType === "SIGNUP") {
-      const res = await SignUp(values);
+    const authAction = actionType === "SIGNUP" ? SignUp : Login;
 
-      if (!res.success) {
-        toast.error(res.message);
-      } else {
-        toast.success("Awesome! Your account is ready.");
-        router.push("/login");
-      }
-    } else if (actionType === "LOGIN") {
-      const res = await Login(values);
+    const successMessage =
+      actionType === "SIGNUP"
+        ? "Awesome! Your account is ready."
+        : "You’ve successfully logged in.";
 
-      if (!res.success) {
-        toast.error(res.message);
-        console.log(res.message);
-      } else {
-        toast.success("Success");
-        router.push("/");
-      }
+    const res = await authAction(values);
+
+    // handle error response
+    if (!res.success) {
+      toast.error(res.message);
+      console.log(res.message);
+      return;
     }
+
+    // handle successfull response
+    toast.success(successMessage);
+    router.refresh();
   }
 
+  // reset form
   useEffect(() => {
     if (form.formState.isSubmitSuccessful) {
       form.reset();

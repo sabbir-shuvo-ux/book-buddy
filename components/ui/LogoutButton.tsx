@@ -1,7 +1,7 @@
 "use client";
 
 import { Logout } from "@/actions/authActions";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 
 const LogoutButton = () => {
   const handleLogout = async () => {
