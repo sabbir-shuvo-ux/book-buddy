@@ -1,11 +1,11 @@
+import MenuList from "@/components/header/MenuList";
+import LogoutButton from "@/components/ui/LogoutButton";
+import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import logo from "@/public/bookBuddy.png";
 import Image from "next/image";
 import Link from "next/link";
 import { RiUser3Line } from "react-icons/ri";
-import MenuList from "@/components/header/MenuList";
-import LogoutButton from "@/components/ui/LogoutButton";
-import { Button } from "@/components/ui/button";
 
 const TopNavbar = async () => {
   const session = await auth();

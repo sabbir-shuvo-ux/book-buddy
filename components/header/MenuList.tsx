@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { menuData } from "@/constents/menudata";
+import { menuData } from "@/constents/menuData";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
