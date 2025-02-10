@@ -43,7 +43,7 @@ const books: Prisma.BookCreateInput[] = [
     link: "https://en.wikipedia.org/wiki/Epic_of_Gilgamesh\n",
     pages: 160,
     title: "The Epic Of Gilgamesh",
-    year: -1700,
+    year: 1700,
   },
   {
     country: "Achaemenid Empire",
@@ -53,7 +53,7 @@ const books: Prisma.BookCreateInput[] = [
     link: "https://en.wikipedia.org/wiki/Book_of_Job\n",
     pages: 176,
     title: "The Book Of Job",
-    year: -600,
+    year: 600,
   },
   {
     country: "India/Iran/Iraq/Egypt/Tajikistan",
