@@ -9,7 +9,7 @@ const LogoutButton = () => {
   };
 
   return (
-    <Button variant={"secondary"} size={"lg"} onClick={handleLogout}>
+    <Button variant={"destructive"} size={"lg"} onClick={handleLogout}>
       Logout
     </Button>
   );

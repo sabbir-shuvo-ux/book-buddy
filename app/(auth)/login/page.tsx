@@ -4,8 +4,9 @@ const LoginPage = () => {
   return (
     <AuthFormWrapper
       actionType="LOGIN"
-      extraText="Create an account"
+      extraText="Don't have an account ?"
       title="Login"
+      linkText="Create an account"
     />
   );
 };
