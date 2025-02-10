@@ -15,14 +15,6 @@ export async function middleware(request: NextRequest) {
 
   console.log("Authenticated:", isAuthenticated, "Path:", nextUrl.pathname);
 
-  if (
-    nextUrl.pathname.startsWith("/_next/") ||
-    nextUrl.pathname.startsWith("/public/") ||
-    nextUrl.pathname.match(/\.(png|jpg|jpeg|gif|webp|svg)$/)
-  ) {
-    return NextResponse.next();
-  }
-
   const isPublicRoute =
     PUBLIC_ROUTES.some((route) => nextUrl.pathname.startsWith(route)) ||
     nextUrl.pathname === ROOT;
@@ -52,9 +44,3 @@ export const config = {
     "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
   ],
 };
-
-// export const config = {
-//   matcher: [
-//     "/((?!api|_next/static|_next/image|public|.*\\.(png|jpg|jpeg|gif|webp|svg)).*)",
-//   ],
-// };

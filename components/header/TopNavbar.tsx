@@ -5,6 +5,7 @@ import Link from "next/link";
 import { RiUser3Line } from "react-icons/ri";
 import { auth } from "@/lib/auth";
 import LogoutButton from "../ui/LogoutButton";
+import logo from "@/public/bookBuddy.png";
 
 const TopNavbar = async () => {
   const session = await auth();
@@ -19,7 +20,7 @@ const TopNavbar = async () => {
             title="BookBuddy Home Page"
             className="flex gap-2 items-center"
           >
-            <Image src={"/logo.png"} alt="BookBuddy" height={40} width={40} />
+            <Image src={logo} alt="BookBuddy" height={40} width={40} />
             <h2 className="font-bold text-lg">BookBuddy</h2>
           </Link>
         </div>
