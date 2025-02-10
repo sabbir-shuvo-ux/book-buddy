@@ -14,6 +14,7 @@ import { Login, SignUp } from "@/actions/authActions";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
+import { HOME, LOGIN } from "@/constents/middlewareRoutes";
 
 type Props = {
   actionType: "LOGIN" | "SIGNUP";
@@ -34,11 +35,11 @@ const AuthForm = ({ actionType }: Props) => {
   // handle form submit
   async function onSubmit(values: AuthFormSchemaType) {
     const authAction = actionType === "SIGNUP" ? SignUp : Login;
-
     const successMessage =
       actionType === "SIGNUP"
         ? "Awesome! Your account is ready."
         : "You’ve successfully logged in.";
+    const redirectPath = actionType === "SIGNUP" ? LOGIN : HOME;
 
     const res = await authAction(values);
 
@@ -49,8 +50,8 @@ const AuthForm = ({ actionType }: Props) => {
       return;
     }
 
-    // handle successfull response
     toast.success(successMessage);
+    router.push(redirectPath);
     router.refresh();
   }
 
