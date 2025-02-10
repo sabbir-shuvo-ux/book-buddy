@@ -36,13 +36,13 @@ const AuthForm = ({ actionType }: Props) => {
     const authAction = actionType === "SIGNUP" ? SignUp : Login;
 
     const successMessage =
-      actionType === "SIGNUP" ? "Awesome! Your account is ready." : "Success";
-
-    const redirectPath = actionType === "SIGNUP" ? "/login" : "/";
+      actionType === "SIGNUP"
+        ? "Awesome! Your account is ready."
+        : "You’ve successfully logged in.";
 
     const res = await authAction(values);
 
-    // handle error message
+    // handle error response
     if (!res.success) {
       toast.error(res.message);
       console.log(res.message);
@@ -51,7 +51,7 @@ const AuthForm = ({ actionType }: Props) => {
 
     // handle successfull response
     toast.success(successMessage);
-    router.push(redirectPath);
+    router.refresh();
   }
 
   // reset form

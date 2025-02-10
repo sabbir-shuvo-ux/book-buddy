@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { RiUser3Line } from "react-icons/ri";
 import { auth } from "@/lib/auth";
+import LogoutButton from "../ui/LogoutButton";
 
 const TopNavbar = async () => {
   const session = await auth();
@@ -24,7 +25,7 @@ const TopNavbar = async () => {
         </div>
 
         {session ? (
-          "loged in"
+          <LogoutButton />
         ) : (
           <div className="flex gap-6 items-center">
             <Button asChild variant={"link"} className="max-[420px]:hidden">

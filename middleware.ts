@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { authConfig } from "./lib/auth.config";
 
-import { LOGIN, PUBLIC_ROUTES, HOME } from "@/constents/constents";
+// constents for routes
+import { LOGIN, PUBLIC_ROUTES, HOME, ROOT } from "@/constents/middlewareRoutes";
 
 const { auth } = NextAuth(authConfig);
 
@@ -14,9 +15,9 @@ export async function middleware(request: NextRequest) {
 
   console.log("Authenticated:", isAuthenticated, "Path:", nextUrl.pathname);
 
-  const isPublicRoute = PUBLIC_ROUTES.some((route) =>
-    nextUrl.pathname.startsWith(route)
-  );
+  const isPublicRoute =
+    PUBLIC_ROUTES.some((route) => nextUrl.pathname.startsWith(route)) ||
+    nextUrl.pathname === ROOT;
 
   // If user is not logged in and trying to access a protected route
   if (!isAuthenticated && !isPublicRoute) {
@@ -24,11 +25,11 @@ export async function middleware(request: NextRequest) {
   }
 
   // if user is logged in and trying to access a public route
-  if (isAuthenticated && isPublicRoute && nextUrl.pathname !== HOME) {
+  if (isAuthenticated && isPublicRoute) {
     return NextResponse.redirect(new URL(HOME, request.url));
   }
 
-  return NextResponse.next(); // Allow request to proceed
+  return NextResponse.next();
 }
 
 export const config = {
