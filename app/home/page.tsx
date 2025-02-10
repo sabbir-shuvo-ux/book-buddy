@@ -1,7 +1,12 @@
 import React from "react";
+import WelcomeMessage from "./(components)/WelcomeSectionWrapper";
 
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return (
+    <>
+      <WelcomeMessage />
+    </>
+  );
 };
 
 export default HomePage;
