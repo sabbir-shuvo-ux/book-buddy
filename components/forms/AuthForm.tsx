@@ -49,9 +49,13 @@ const AuthForm = ({ actionType }: Props) => {
       return;
     }
 
-    // handle successfull response
     toast.success(successMessage);
-    router.refresh();
+
+    if (actionType === "SIGNUP") {
+      router.push("/login");
+    } else {
+      router.refresh();
+    }
   }
 
   // reset form
