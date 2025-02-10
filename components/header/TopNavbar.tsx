@@ -1,11 +1,11 @@
+import { auth } from "@/lib/auth";
+import logo from "@/public/bookBuddy.png";
 import Image from "next/image";
-import React from "react";
-import { Button } from "../ui/button";
 import Link from "next/link";
 import { RiUser3Line } from "react-icons/ri";
-import { auth } from "@/lib/auth";
-import LogoutButton from "../ui/LogoutButton";
-import logo from "@/public/bookBuddy.png";
+import MenuList from "@/components/header/MenuList";
+import LogoutButton from "@/components/ui/LogoutButton";
+import { Button } from "@/components/ui/button";
 
 const TopNavbar = async () => {
   const session = await auth();
@@ -24,6 +24,8 @@ const TopNavbar = async () => {
             <h2 className="font-bold text-lg">BookBuddy</h2>
           </Link>
         </div>
+
+        {session && <MenuList />}
 
         {session ? (
           <LogoutButton />
