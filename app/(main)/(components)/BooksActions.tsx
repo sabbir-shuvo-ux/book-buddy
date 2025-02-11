@@ -9,13 +9,22 @@ import { FaShareFromSquare } from "react-icons/fa6";
 import { MdFavoriteBorder } from "react-icons/md";
 import { IoCloseOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 type Props = {
   bookId: string;
-  isFav: boolean;
+  userBookListId: string[];
 };
 
-const BooksActions = ({ bookId, isFav }: Props) => {
+const BooksActions = ({ bookId, userBookListId }: Props) => {
+  const [isFav, setIsFav] = useState(false);
+
+  useEffect(() => {
+    setIsFav(userBookListId.includes(bookId));
+
+    console.log(userBookListId);
+  }, [userBookListId, bookId]);
+
   // handle favorites books
   const handleFavorites = async () => {
     const toggleAction = isFav ? removeFromLibraryAction : addToLibraryAction;
@@ -29,12 +38,12 @@ const BooksActions = ({ bookId, isFav }: Props) => {
   };
 
   return (
-    <div className="">
-      <Button onClick={handleFavorites} variant={"ghost"} size={"icon"}>
+    <div className="flex gap-4 mt-2">
+      <Button onClick={handleFavorites} variant={"ghost"} size={"icon-lg"}>
         {isFav ? <IoCloseOutline /> : <MdFavoriteBorder />}
       </Button>
 
-      <Button variant={"ghost"} size={"icon"}>
+      <Button variant={"ghost"} size={"icon-lg"}>
         <FaShareFromSquare />
       </Button>
     </div>

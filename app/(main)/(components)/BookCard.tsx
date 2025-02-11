@@ -1,8 +1,14 @@
 import Image from "next/image";
-import BooksActions from "./BooksActions";
+import BooksActions from "@/app/(main)/(components)/BooksActions";
 import { Book } from "@prisma/client";
 
-const BookCard = ({ data, isFav }: { data: Book; isFav: boolean }) => {
+const BookCard = ({
+  data,
+  userBookListId,
+}: {
+  data: Book;
+  userBookListId: string[];
+}) => {
   return (
     <article
       className="bg-white border-[rgb(232,232,232)] border-[2px] border-solid py-6 px-4 rounded-md"
@@ -24,7 +30,7 @@ const BookCard = ({ data, isFav }: { data: Book; isFav: boolean }) => {
           {data.author} - {data.year}
         </p>
 
-        <BooksActions isFav={isFav} bookId={data.id} />
+        <BooksActions userBookListId={userBookListId} bookId={data.id} />
       </div>
     </article>
   );
