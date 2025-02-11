@@ -130,6 +130,7 @@ export const createBookAndUpdateUserBookList = async (
         pages,
         year,
         imageLink,
+        userId: user.id,
       },
     });
 
