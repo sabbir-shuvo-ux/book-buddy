@@ -46,6 +46,7 @@ const ImgUploader = ({
       <IKUpload
         ref={ikUploadRef}
         onUploadProgress={(progress) => {
+          console.log(progress);
           setLoading(false);
           const percentage = Math.round(
             (progress.loaded / progress.total) * 100
@@ -67,6 +68,10 @@ const ImgUploader = ({
         onSuccess={(res) => {
           setUrl(res.url);
           setLoading(false);
+          console.log(res.url);
+        }}
+        onError={(err) => {
+          console.log(err.message);
         }}
         urlEndpoint={process.env.NEXT_PUBLIC_URL_ENDPOINT}
         publicKey={process.env.NEXT_PUBLIC_PUBLIC_KEY}
