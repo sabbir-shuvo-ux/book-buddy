@@ -24,7 +24,9 @@ const ImgUploader = ({
 
   const authenticator = async () => {
     try {
-      const response = await fetch("/api/img-upload-auth");
+      const response = await fetch("/api/img-upload-auth", {
+        cache: "no-store",
+      });
 
       if (!response.ok) {
         const errorText = await response.text();
