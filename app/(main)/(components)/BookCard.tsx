@@ -29,6 +29,9 @@ const BookCard = ({
         <p>
           {data.author} - {data.year}
         </p>
+        <p>
+          {data.country} - {data.language}
+        </p>
 
         <BooksActions userBookListId={userBookListId} bookId={data.id} />
       </div>

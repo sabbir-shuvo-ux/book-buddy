@@ -29,10 +29,11 @@ model Book {
 }
 
 model UserBookList {
-  userId String
-  bookId String
-  User   User   @relation(fields: [userId], references: [id])
-  Book   Book   @relation(fields: [bookId], references: [id])
+  userId    String
+  bookId    String
+  User      User     @relation(fields: [userId], references: [id])
+  Book      Book     @relation(fields: [bookId], references: [id])
+  createdAt DateTime @default(now())
 
   @@id([userId, bookId])
 }

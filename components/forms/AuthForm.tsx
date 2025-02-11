@@ -38,7 +38,7 @@ const AuthForm = ({ actionType }: Props) => {
     const successMessage =
       actionType === "SIGNUP"
         ? "Awesome! Your account is ready."
-        : "You’ve successfully logged in.";
+        : "Welcome! You're now logged in.";
     const redirectPath = actionType === "SIGNUP" ? LOGIN : HOME;
 
     const res = await authAction(values);

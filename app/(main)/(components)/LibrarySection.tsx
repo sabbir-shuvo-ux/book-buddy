@@ -1,5 +1,5 @@
 import { getAuthenticatedUser } from "@/lib/getAuthenticatedUser";
-import { getAllUsersBooks, totalBooks } from "@/services/userService";
+import { getAllUserBooksAndIds, totalBooks } from "@/services/userService";
 
 import { Button } from "@/components/ui/button";
 import { getWelcomeMessage } from "@/lib/getWelcomeMessage";
@@ -11,27 +11,26 @@ type Props = {
   isEmail?: boolean;
   title?: string;
   isPageLink?: boolean;
+  dataLimit?: number;
 };
 
 const LibrarySection = async ({
   isEmail = false,
   title,
   isPageLink = false,
+  dataLimit,
 }: Props) => {
   const user = await getAuthenticatedUser();
   const bookCount = await totalBooks();
 
-  const data = await getAllUsersBooks();
-
-  const userBookListId = data.map((item) => item.bookId);
-  const userBookData = data.map((item) => item.Book);
+  const { bookIds, books } = await getAllUserBooksAndIds(dataLimit);
 
   return (
     <section
-      className={cn("container pt-10", data.length > 0 ? "pb-10" : "pb-0")}
+      className={cn("container pt-10", books.length > 0 ? "pb-10" : "pb-0")}
     >
-      <div className="flex justify-between">
-        <div className="">
+      <div className="flex justify-between items-center gap-4 flex-wrap">
+        <div>
           <h3 className="text-lg font-semibold capitalize">
             {isEmail
               ? getWelcomeMessage(user.email.replace(/@.*$/, ""))
@@ -49,7 +48,7 @@ const LibrarySection = async ({
             <Link href={"/library/add-books"}>Add books</Link>
           </Button>
           {isPageLink
-            ? data.length > 0 && (
+            ? books.length > 0 && (
                 <Button asChild variant={"link"}>
                   <Link href={"/library"}>See More</Link>
                 </Button>
@@ -57,14 +56,10 @@ const LibrarySection = async ({
             : null}
         </div>
       </div>
-      {userBookData.length > 0 && (
-        <div className="grid grid-cols-6 gap-8 mt-8">
-          {userBookData?.map((item) => (
-            <BookCard
-              key={item.id}
-              data={item}
-              userBookListId={userBookListId}
-            />
+      {books.length > 0 && (
+        <div className="grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-[1500px]:grid-cols-6 gap-8 mt-8">
+          {books?.map((item) => (
+            <BookCard key={item.id} data={item} userBookListId={bookIds} />
           ))}
         </div>
       )}
