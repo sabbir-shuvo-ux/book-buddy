@@ -10,7 +10,7 @@ const HomePage = () => {
         <LibrarySection isEmail isPageLink />
       </Suspense>
       <Suspense fallback={<LibrarySectionSekeleton />}>
-        <DiscoverSection />
+        <DiscoverSection isPageLink />
       </Suspense>
     </>
   );

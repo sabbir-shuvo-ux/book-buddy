@@ -3,7 +3,11 @@ import { getAllUsersBooks, userSuggestionsBooks } from "@/services/userService";
 import Link from "next/link";
 import BookCard from "./BookCard";
 
-const DiscoverSection = async () => {
+type Props = {
+  isPageLink?: boolean;
+};
+
+const DiscoverSection = async ({ isPageLink = false }: Props) => {
   const data = await userSuggestionsBooks();
 
   const userBooks = await getAllUsersBooks();
@@ -19,11 +23,13 @@ const DiscoverSection = async () => {
             </h3>
           </div>
 
-          <Button asChild variant={"link"}>
-            <Link href={"/discover"}>See More</Link>
-          </Button>
+          {isPageLink ? (
+            <Button asChild variant={"link"}>
+              <Link href={"/discover"}>See More</Link>
+            </Button>
+          ) : null}
         </div>
-        <div className="grid grid-cols-6 gap-8 mt-8">
+        <div className="grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-[1500px]:grid-cols-6 gap-8 mt-8">
           {data?.map((item) => (
             <BookCard
               key={item.id}

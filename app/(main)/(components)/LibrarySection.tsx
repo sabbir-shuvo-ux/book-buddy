@@ -58,7 +58,7 @@ const LibrarySection = async ({
         </div>
       </div>
       {userBookData.length > 0 && (
-        <div className="grid grid-cols-6 gap-8 mt-8">
+        <div className="grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-[1500px]:grid-cols-6 gap-8 mt-8">
           {userBookData?.map((item) => (
             <BookCard
               key={item.id}
