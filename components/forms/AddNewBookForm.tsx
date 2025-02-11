@@ -132,6 +132,7 @@ const AddNewBookForm = () => {
             setTrackProgress={setTrackProgress}
             trackProgress={trackProgress}
             setLoading={setLoading}
+            loading={loading}
           />
         )}
 

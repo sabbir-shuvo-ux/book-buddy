@@ -6,6 +6,7 @@ import logo from "@/public/bookBuddy.png";
 import Image from "next/image";
 import Link from "next/link";
 import { RiUser3Line } from "react-icons/ri";
+import MobileSidebar from "../MobileSidebar";
 
 const TopNavbar = async () => {
   const session = await auth();
@@ -25,23 +26,29 @@ const TopNavbar = async () => {
           </Link>
         </div>
 
-        {session && <MenuList />}
+        {session && <MenuList className="hidden md:flex" />}
 
-        {session ? (
-          <LogoutButton />
-        ) : (
-          <div className="flex gap-6 items-center">
-            <Button asChild variant={"link"} className="max-[420px]:hidden">
-              <Link href={"/login"}>Sign In</Link>
-            </Button>
+        <div className="">
+          {session ? (
+            <>
+              <LogoutButton className="hidden md:flex" />
 
-            <Button asChild className="">
-              <Link href={"/signup"}>
-                <RiUser3Line /> Get Started
-              </Link>
-            </Button>
-          </div>
-        )}
+              <MobileSidebar className="md:hidden" />
+            </>
+          ) : (
+            <div className="flex gap-6 items-center">
+              <Button asChild variant={"link"} className="max-[420px]:hidden">
+                <Link href={"/login"}>Sign In</Link>
+              </Button>
+
+              <Button asChild className="">
+                <Link href={"/signup"}>
+                  <RiUser3Line /> Get Started
+                </Link>
+              </Button>
+            </div>
+          )}
+        </div>
       </nav>
     </header>
   );

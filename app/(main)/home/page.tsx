@@ -7,10 +7,10 @@ const HomePage = () => {
   return (
     <>
       <Suspense fallback={<LibrarySectionSekeleton />}>
-        <LibrarySection isEmail isPageLink />
+        <LibrarySection isEmail isPageLink dataLimit={6} />
       </Suspense>
       <Suspense fallback={<LibrarySectionSekeleton />}>
-        <DiscoverSection isPageLink />
+        <DiscoverSection isPageLink dataLimit={6} />
       </Suspense>
     </>
   );

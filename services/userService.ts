@@ -24,22 +24,42 @@ export const totalBooks = cache(async () => {
   }
 });
 
-// get all user collections books
-export const getAllUsersBooks = cache(async () => {
+// get all user books and Ids
+export const getAllUserBooksAndIds = cache(async (limit?: number) => {
   const { id } = await getAuthenticatedUser();
 
+  // Fetch all book for bookId
+  const allBookIds = await prisma.userBookList.findMany({
+    where: { userId: id },
+    select: { bookId: true },
+  });
+
+  // Fetch book details with limit, ordered by when the user added them
   const books = await prisma.userBookList.findMany({
     where: { userId: id },
     include: { Book: true },
+    orderBy: { createdAt: "desc" },
+    take: limit || undefined,
   });
 
-  return books;
+  return {
+    bookIds: allBookIds.map((i) => i.bookId),
+    books: books.map((item) => item.Book),
+  };
 });
 
 // get some books for first time user
-export const userSuggestionsBooks = cache(async () => {
+export const userSuggestionsBooks = cache(async (limit?: number) => {
+  const { id } = await getAuthenticatedUser();
+
   const books = await prisma.book.findMany({
-    where: { userId: null },
+    where: {
+      userId: null,
+      UserBookList: {
+        none: { userId: id },
+      },
+    },
+    take: limit || undefined,
   });
 
   return books;

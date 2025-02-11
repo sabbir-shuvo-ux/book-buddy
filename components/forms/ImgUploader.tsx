@@ -12,6 +12,7 @@ type Props = {
   setTrackProgress: React.Dispatch<React.SetStateAction<number>>;
   trackProgress: number;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  loading: boolean;
 };
 
 const ImgUploader = ({
@@ -19,6 +20,7 @@ const ImgUploader = ({
   setTrackProgress,
   trackProgress,
   setLoading,
+  loading,
 }: Props) => {
   const ikUploadRef = useRef<HTMLInputElement>(null);
 
@@ -48,8 +50,8 @@ const ImgUploader = ({
       <IKUpload
         ref={ikUploadRef}
         onUploadProgress={(progress) => {
+          setLoading(true);
           console.log(progress);
-          setLoading(false);
           const percentage = Math.round(
             (progress.loaded / progress.total) * 100
           );
@@ -82,6 +84,7 @@ const ImgUploader = ({
       />
 
       <button
+        disabled={loading}
         type="button"
         onClick={() => ikUploadRef.current?.click()}
         className="flex items-center justify-center w-full"
