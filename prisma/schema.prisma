@@ -15,9 +15,8 @@ model Book {
   author    String? @default("Unknown")
   country   String?
   language  String?
-  link      String?
-  pages     Int?
-  year      Int?
+  pages     String?
+  year      String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

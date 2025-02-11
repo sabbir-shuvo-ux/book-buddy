@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { HTMLInputTypeAttribute } from "react";
+import { cn } from "@/lib/utils";
 
 type FormItemType<TSchema extends FieldValues> = {
   name: Path<TSchema>;
@@ -18,6 +19,7 @@ type FormItemType<TSchema extends FieldValues> = {
   type?: HTMLInputTypeAttribute;
   placeholder: string;
   labelClassName?: string;
+  ishidden?: boolean;
 };
 
 export const FormInput = <TSchema extends FieldValues>({
@@ -27,16 +29,19 @@ export const FormInput = <TSchema extends FieldValues>({
   type = "text",
   placeholder,
   labelClassName,
+  ishidden = false,
 }: FormItemType<TSchema>) => {
   return (
     <FormField
       name={name}
       control={form.control}
       render={({ field }) => (
-        <FormItem className="my-2">
+        <FormItem className="">
           {label && <FormLabel className={labelClassName}>{label}</FormLabel>}
           <FormControl>
             <Input
+              className={cn(ishidden && "hidden")}
+              disabled={ishidden}
               type={type}
               placeholder={placeholder}
               {...field}

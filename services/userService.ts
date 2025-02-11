@@ -1,6 +1,10 @@
 import { getAuthenticatedUser } from "@/lib/getAuthenticatedUser";
 import { handleError } from "@/lib/handleError";
 import { prisma } from "@/lib/prisma";
+import {
+  AddNewBookSchema,
+  AddNewBookSchemaType,
+} from "@/schemas/addNewBookSchema";
 import { cache } from "react";
 
 // total books count
@@ -105,4 +109,38 @@ export const removeFromLibrary = async (
   });
 
   return { success: true, message: "Book removed from your library" };
+};
+
+// create new book and update user book list
+export const createBookAndUpdateUserBookList = async (
+  data: AddNewBookSchemaType
+): Promise<{ success: boolean; message: string }> => {
+  const user = await getAuthenticatedUser();
+
+  const { title, author, country, language, pages, year, imageLink } = data;
+
+  await prisma.$transaction(async (tx) => {
+    // Create new book
+    const newBook = await tx.book.create({
+      data: {
+        title,
+        author: author || "Unknown",
+        country,
+        language,
+        pages,
+        year,
+        imageLink,
+      },
+    });
+
+    // Create UserBookList relation
+    await tx.userBookList.create({
+      data: {
+        userId: user.id,
+        bookId: newBook.id,
+      },
+    });
+  });
+
+  return { success: true, message: "New book added to your library" };
 };

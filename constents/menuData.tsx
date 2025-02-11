@@ -20,9 +20,4 @@ export const menuData: MenuDataType[] = [
     href: "/discover",
     id: "discover-3",
   },
-  {
-    label: "Friends",
-    href: "/friends",
-    id: "friends-4",
-  },
 ];

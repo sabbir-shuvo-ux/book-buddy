@@ -1,7 +1,12 @@
 "use server";
 
 import { handleError } from "@/lib/handleError";
-import { addToLibrary, removeFromLibrary } from "@/services/userService";
+import { AddNewBookSchemaType } from "@/schemas/addNewBookSchema";
+import {
+  addToLibrary,
+  createBookAndUpdateUserBookList,
+  removeFromLibrary,
+} from "@/services/userService";
 import { revalidatePath } from "next/cache";
 
 // add books to user book list
@@ -49,5 +54,26 @@ const RemoveFromLibraryAction = async (
 };
 
 // create new book in user book list and book
+const createAndUpdateBook = async (
+  data: AddNewBookSchemaType
+): Promise<{ success: boolean; message: string }> => {
+  try {
+    const { message, success } = await createBookAndUpdateUserBookList(data);
 
-export { AddToLibraryAction, RemoveFromLibraryAction };
+    if (success) {
+      revalidatePath("/home");
+      revalidatePath("/library");
+    }
+    return { success: success, message: message };
+  } catch (error) {
+    const res = handleError(error);
+    console.error("Error in create and update book:", res.error);
+
+    return {
+      success: false,
+      message: res.error,
+    };
+  }
+};
+
+export { AddToLibraryAction, RemoveFromLibraryAction, createAndUpdateBook };
