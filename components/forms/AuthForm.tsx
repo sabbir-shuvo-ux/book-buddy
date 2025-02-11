@@ -10,11 +10,11 @@ import { useRouter } from "next/navigation";
 import { AuthFormSchema, AuthFormSchemaType } from "@/schemas/authSchema";
 
 // components
-import { Login, SignUp } from "@/actions/authActions";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/ui/FormInput";
 import { HOME, LOGIN } from "@/constents/middlewareRoutes";
+import { Login, SignUp } from "@/actions/authActions";
 
 type Props = {
   actionType: "LOGIN" | "SIGNUP";

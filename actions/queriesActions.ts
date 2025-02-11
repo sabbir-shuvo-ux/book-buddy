@@ -4,7 +4,8 @@ import { handleError } from "@/lib/handleError";
 import { addToLibrary, removeFromLibrary } from "@/services/userService";
 import { revalidatePath } from "next/cache";
 
-export const addToLibraryAction = async (
+// add books to user book list
+const AddToLibraryAction = async (
   bookId: string
 ): Promise<{ success: boolean; message: string }> => {
   try {
@@ -25,7 +26,8 @@ export const addToLibraryAction = async (
   }
 };
 
-export const removeFromLibraryAction = async (
+// remove book from user book list
+const RemoveFromLibraryAction = async (
   bookId: string
 ): Promise<{ success: boolean; message: string }> => {
   try {
@@ -45,3 +47,7 @@ export const removeFromLibraryAction = async (
     };
   }
 };
+
+// create new book in user book list and book
+
+export { AddToLibraryAction, RemoveFromLibraryAction };

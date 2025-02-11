@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  addToLibraryAction,
-  removeFromLibraryAction,
+  AddToLibraryAction,
+  RemoveFromLibraryAction,
 } from "@/actions/queriesActions";
 import { Button } from "@/components/ui/button";
 import { FaShareFromSquare } from "react-icons/fa6";
@@ -27,7 +27,7 @@ const BooksActions = ({ bookId, userBookListId }: Props) => {
 
   // handle favorites books
   const handleFavorites = async () => {
-    const toggleAction = isFav ? removeFromLibraryAction : addToLibraryAction;
+    const toggleAction = isFav ? RemoveFromLibraryAction : AddToLibraryAction;
 
     // wait for the result until show processing
     toast.promise(toggleAction(bookId), {

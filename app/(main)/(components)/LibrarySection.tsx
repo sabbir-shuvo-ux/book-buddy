@@ -10,9 +10,14 @@ import BookCard from "./BookCard";
 type Props = {
   isEmail?: boolean;
   title?: string;
+  isPageLink?: boolean;
 };
 
-const LibrarySection = async ({ isEmail = false, title }: Props) => {
+const LibrarySection = async ({
+  isEmail = false,
+  title,
+  isPageLink = false,
+}: Props) => {
   const user = await getAuthenticatedUser();
   const bookCount = await totalBooks();
 
@@ -39,12 +44,18 @@ const LibrarySection = async ({ isEmail = false, title }: Props) => {
             <h4>you dont have any books in your library</h4>
           )}
         </div>
-
-        {data.length > 0 && (
-          <Button asChild variant={"link"}>
-            <Link href={"/library"}>See More</Link>
+        <div className="flex gap-4">
+          <Button asChild variant={"default"}>
+            <Link href={"/library/add-books"}>Add books</Link>
           </Button>
-        )}
+          {isPageLink
+            ? data.length > 0 && (
+                <Button asChild variant={"link"}>
+                  <Link href={"/library"}>See More</Link>
+                </Button>
+              )
+            : null}
+        </div>
       </div>
       {userBookData.length > 0 && (
         <div className="grid grid-cols-6 gap-8 mt-8">
