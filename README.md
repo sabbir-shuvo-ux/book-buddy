@@ -1,6 +1,12 @@
+
+
+![App Screenshot](https://raw.githubusercontent.com/sabbir-shuvo-ux/book-buddy/refs/heads/project-images/images/bookbuddy7.png)
+
+
 # BookBuddy
 
 This is a full-stack book listing web application built with Next.js, Prisma ORM, and PostgreSQL. The app allows users to browse, add and filter through a collection of books. It features user authentication using Auth.js (formerly known as NextAuth) for secure login and session management.
+
 
 ## Key Features
 
@@ -8,6 +14,7 @@ This is a full-stack book listing web application built with Next.js, Prisma ORM
 - Database Integration: Prisma ORM to interact with a PostgreSQL - database for seamless data management.
 - Book Listings: Users can view, create and filter books by various attributes like title, author, image and etc.
 - CRUD Operations: users can add there own book or add existing books in there booklist and delete books.
+
 
 ## Tech Stack
 
@@ -18,7 +25,6 @@ This is a full-stack book listing web application built with Next.js, Prisma ORM
 - **Tailwind CSS:** Utility-first CSS framework for rapid UI development.
 - **ShadCN UI:** A component library built on top of Tailwind CSS for building beautiful, accessible, and consistent UIs.
 - **ImageKit:** Cloud-based image storage and optimization service for efficient media handling and delivery.
-
 ## Environment Variables
 
 To run BookBuddy, you will need to add the following environment variables to your .env file
@@ -36,7 +42,6 @@ To run BookBuddy, you will need to add the following environment variables to yo
 ### DB URL
 
 `DATABASE_URL=<*****************>`
-
 ## Run Locally
 
 Clone the project
@@ -69,3 +74,4 @@ Start the server
   npm run build
   npm start
 ```
+
