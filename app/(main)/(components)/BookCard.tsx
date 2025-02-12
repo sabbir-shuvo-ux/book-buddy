@@ -48,6 +48,11 @@ const BookCard = ({
               Language : <span className="font-semibold ">{data.language}</span>
             </p>
           )}
+          {data.pages && (
+            <p className="text-sm">
+              Pages : <span className="font-semibold">{data.pages}</span>
+            </p>
+          )}
         </div>
       </div>
     </article>

@@ -1,18 +1,22 @@
 import { Button } from "@/components/ui/button";
-import {
-  getAllUserBooksAndIds,
-  userSuggestionsBooks,
-} from "@/services/userService";
+import { getAllUserBooksAndIds, getBooks } from "@/services/userService";
 import Link from "next/link";
 import BookCard from "./BookCard";
 
 type Props = {
   isPageLink?: boolean;
   dataLimit?: number;
+  languages?: string[];
+  countries?: string[];
 };
 
-const DiscoverSection = async ({ isPageLink = false, dataLimit }: Props) => {
-  const data = await userSuggestionsBooks(dataLimit);
+const DiscoverSection = async ({
+  isPageLink = false,
+  dataLimit,
+  countries,
+  languages,
+}: Props) => {
+  const data = await getBooks({ languages, countries: countries }, dataLimit);
 
   const { bookIds } = await getAllUserBooksAndIds();
 

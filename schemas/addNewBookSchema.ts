@@ -6,8 +6,17 @@ export const AddNewBookSchema = z.object({
   author: z.string().min(1).optional().default("Unknown"),
   country: z.string().optional(),
   language: z.string().optional(),
-  pages: z.string().optional(),
-  year: z.string().optional(),
+  pages: z.coerce
+    .number()
+    .optional()
+    .nullable()
+    .transform((value) => (value === 0 ? null : value)),
+
+  year: z.coerce
+    .number()
+    .optional()
+    .nullable()
+    .transform((value) => (value === 0 ? null : value)),
 });
 
 export type AddNewBookSchemaType = z.infer<typeof AddNewBookSchema>;

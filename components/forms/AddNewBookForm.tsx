@@ -33,8 +33,8 @@ const AddNewBookForm = () => {
       country: "",
       imageLink: "",
       language: "",
-      pages: "",
-      year: "",
+      pages: 0,
+      year: 0,
     },
   });
 
@@ -103,12 +103,14 @@ const AddNewBookForm = () => {
             name="pages"
             placeholder="Enter Total Pages"
             label="Pages"
+            type="number"
           />
           <FormInput
             form={form}
             name="year"
             placeholder="Enter Book Published Year"
             label="Published Year"
+            type="number"
           />
         </div>
         <FormInput
