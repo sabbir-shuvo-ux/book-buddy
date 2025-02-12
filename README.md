@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BookBuddy
 
-## Getting Started
+This is a full-stack book listing web application built with Next.js, Prisma ORM, and PostgreSQL. The app allows users to browse, add and filter through a collection of books. It features user authentication using Auth.js (formerly known as NextAuth) for secure login and session management.
 
-First, run the development server:
+## Key Features
+
+- User Authentication: Secure login and session management using Auth.js.
+- Database Integration: Prisma ORM to interact with a PostgreSQL - database for seamless data management.
+- Book Listings: Users can view, create and filter books by various attributes like title, author, image and etc.
+- CRUD Operations: users can add there own book or add existing books in there booklist and delete books.
+
+## Tech Stack
+
+- **Next.js :** React framework for building fast and scalable web apps.
+- **Prisma ORM:** Type-safe database access for seamless integration with PostgreSQL.
+- **PostgreSQL:** Relational database for storing book and user data.
+- **Auth.js:** Authentication library to manage user sessions and security.
+- **Tailwind CSS:** Utility-first CSS framework for rapid UI development.
+- **ShadCN UI:** A component library built on top of Tailwind CSS for building beautiful, accessible, and consistent UIs.
+- **ImageKit:** Cloud-based image storage and optimization service for efficient media handling and delivery.
+
+## Environment Variables
+
+To run BookBuddy, you will need to add the following environment variables to your .env file
+
+### Auth.js
+
+`AUTH_SECRET=<FOR_AUTH_JS>`
+
+### Imagekit
+
+`NEXT_PUBLIC_PUBLIC_KEY="<YOUR_IMAGEKIT_PUBLIC_KEY>"`
+`NEXT_PUBLIC_URL_ENDPOINT="<YOUR_IMAGEKIT_URL_ENDPOINT>"`
+`PRIVATE_KEY="<YOUR_IMAGEKIT_PRIVATE_KEY>"`
+
+### DB URL
+
+`DATABASE_URL=<*****************>`
+
+## Run Locally
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/sabbir-shuvo-ux/book-buddy.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+  cd ./book-buddy
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Install dependencies
 
-## Learn More
+```bash
+  npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the server (Dev Server)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Start the server
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+  npm run build
+  npm start
+```
