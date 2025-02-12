@@ -1,6 +1,10 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function LibrarySectionSekeleton() {
+type Props = {
+  limit?: number;
+};
+
+export function LibrarySectionSekeleton({ limit }: Props) {
   return (
     <div className="container py-10">
       <div className="space-y-2 flex justify-between">
@@ -10,7 +14,7 @@ export function LibrarySectionSekeleton() {
         <Skeleton className="h-[28px] w-[100px]" />
       </div>
       <div className="grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-[1500px]:grid-cols-6 gap-8 mt-8">
-        {Array.from({ length: 6 }).map((_, index) => (
+        {Array.from({ length: limit ? limit : 6 }).map((_, index) => (
           <div
             key={index}
             className="bg-white border-[rgb(232,232,232)] relative border-[2px] border-solid rounded-md"

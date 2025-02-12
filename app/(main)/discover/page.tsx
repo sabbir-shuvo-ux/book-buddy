@@ -22,6 +22,7 @@ const DiscoverPage = ({
       <DiscoverSection
         countries={getCountriesParams}
         languages={getLanguagesParams}
+        className="min-[1500px]:grid-cols-5"
       />
     </Suspense>
   );

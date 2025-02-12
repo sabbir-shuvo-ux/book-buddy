@@ -44,6 +44,9 @@ function FilterForm({ countries, languages }: Props) {
     // add data on url so user can reload
     const params = new URLSearchParams(searchParams.toString());
 
+    if (data.countries.length < 0 && data.languages.length < 0) {
+      return;
+    }
     if (data.countries.length > 0) {
       params.set("countries", data.countries.join(","));
     }
@@ -54,26 +57,41 @@ function FilterForm({ countries, languages }: Props) {
     router.push(pathname + "?" + params.toString(), { scroll: false });
   };
 
+  const handleFilterReset = () => {
+    form.reset();
+    router.replace(pathname, { scroll: false });
+  };
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <CheckboxGroup
-          form={form}
-          name="countries"
-          options={countries}
-          title="Filter By Countries"
-        />
+    <>
+      <div className="text-end mt-4">
+        <Button onClick={handleFilterReset} variant={"link"} className="p-0">
+          Clear
+        </Button>
+      </div>
 
-        <CheckboxGroup
-          form={form}
-          name="languages"
-          options={languages}
-          title="Filter By Languages"
-        />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <CheckboxGroup
+            form={form}
+            name="countries"
+            options={countries}
+            title="Filter By Countries"
+          />
 
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+          <CheckboxGroup
+            form={form}
+            name="languages"
+            options={languages}
+            title="Filter By Languages"
+          />
+
+          <Button disabled={form.formState.isSubmitting} type="submit">
+            {form.formState.isSubmitting ? "Filtering..." : "Filter"}
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 }
 
