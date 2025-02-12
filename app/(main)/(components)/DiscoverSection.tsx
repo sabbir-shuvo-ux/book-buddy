@@ -1,18 +1,26 @@
 import { Button } from "@/components/ui/button";
-import {
-  getAllUserBooksAndIds,
-  userSuggestionsBooks,
-} from "@/services/userService";
+import { getAllUserBooksAndIds, getBooks } from "@/services/userService";
 import Link from "next/link";
 import BookCard from "./BookCard";
+import { cn } from "@/lib/utils";
+import FilterMobileSidebar from "../discover/(components)/FilterMobileSidebar";
 
 type Props = {
   isPageLink?: boolean;
   dataLimit?: number;
+  languages?: string[];
+  countries?: string[];
+  className?: string;
 };
 
-const DiscoverSection = async ({ isPageLink = false, dataLimit }: Props) => {
-  const data = await userSuggestionsBooks(dataLimit);
+const DiscoverSection = async ({
+  isPageLink = false,
+  dataLimit,
+  countries,
+  languages,
+  className,
+}: Props) => {
+  const data = await getBooks({ languages, countries: countries }, dataLimit);
 
   const { bookIds } = await getAllUserBooksAndIds();
 
@@ -20,10 +28,11 @@ const DiscoverSection = async ({ isPageLink = false, dataLimit }: Props) => {
     <>
       <section className="container py-10">
         <div className="flex justify-between">
-          <div className="">
+          <div className="flex justify-between gap-4 flex-wrap items-center w-full">
             <h3 className="text-lg font-semibold capitalize">
               Browse Books You Might Like
             </h3>
+            <FilterMobileSidebar className="md:hidden" />
           </div>
 
           {isPageLink ? (
@@ -32,7 +41,12 @@ const DiscoverSection = async ({ isPageLink = false, dataLimit }: Props) => {
             </Button>
           ) : null}
         </div>
-        <div className="grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-[1500px]:grid-cols-6 gap-8 mt-8">
+        <div
+          className={cn(
+            "grid grid-cols-1 min-[400px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 min-[1500px]:grid-cols-6 gap-8 mt-8",
+            className
+          )}
+        >
           {data?.map((item) => {
             if (!bookIds.includes(item.id)) {
               return (

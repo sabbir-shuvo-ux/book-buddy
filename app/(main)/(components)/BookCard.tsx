@@ -11,10 +11,12 @@ const BookCard = ({
 }) => {
   return (
     <article
-      className="bg-white border-[rgb(232,232,232)] border-[2px] border-solid py-6 px-4 rounded-md"
+      className="bg-white border-[rgb(232,232,232)] border-[2px] relative border-solid rounded-md"
       key={data.id}
     >
-      <div className="max-w-[150px] w-full h-[180px] relative mx-auto">
+      <BooksActions userBookListId={userBookListId} bookId={data.id} />
+
+      <div className="w-full h-[180px] relative mx-auto">
         <Image
           src={data.imageLink}
           alt={data.title}
@@ -23,17 +25,35 @@ const BookCard = ({
         />
       </div>
 
-      <div className="text-center mt-4">
-        <h3 className="font-semibold text-base truncate">{data.title}</h3>
+      <div className="text-center px-2 py-4 h-[calc(100%-180px)]">
+        <h3 className="font-semibold text-base truncate mb-2">{data.title}</h3>
+        <div className="flex flex-col gap-1">
+          <p className="text-sm">
+            Author : <span>{data.author}</span>
+          </p>
 
-        <p>
-          {data.author} - {data.year}
-        </p>
-        <p>
-          {data.country} - {data.language}
-        </p>
+          {data.year && (
+            <p className="text-sm">
+              Published : <span>{data.year}</span>
+            </p>
+          )}
+          {data.country && (
+            <p className="text-sm">
+              Country : <span>{data.country}</span>
+            </p>
+          )}
 
-        <BooksActions userBookListId={userBookListId} bookId={data.id} />
+          {data.language && (
+            <p className="text-sm">
+              Language : <span className="font-semibold ">{data.language}</span>
+            </p>
+          )}
+          {data.pages && (
+            <p className="text-sm">
+              Pages : <span className="font-semibold">{data.pages}</span>
+            </p>
+          )}
+        </div>
       </div>
     </article>
   );

@@ -1,10 +1,7 @@
 import { getAuthenticatedUser } from "@/lib/getAuthenticatedUser";
 import { handleError } from "@/lib/handleError";
 import { prisma } from "@/lib/prisma";
-import {
-  AddNewBookSchema,
-  AddNewBookSchemaType,
-} from "@/schemas/addNewBookSchema";
+import { AddNewBookSchemaType } from "@/schemas/addNewBookSchema";
 import { cache } from "react";
 
 // total books count
@@ -48,21 +45,60 @@ export const getAllUserBooksAndIds = cache(async (limit?: number) => {
   };
 });
 
-// get some books for first time user
-export const userSuggestionsBooks = cache(async (limit?: number) => {
-  const { id } = await getAuthenticatedUser();
+type FilterOptions = {
+  languages?: string[];
+  countries?: string[];
+};
 
-  const books = await prisma.book.findMany({
-    where: {
-      userId: null,
-      UserBookList: {
-        none: { userId: id },
+// get books for new user and also show limited items and also filter the books
+export const getBooks = cache(
+  async (filters?: FilterOptions, limit?: number) => {
+    const { id } = await getAuthenticatedUser();
+    const { languages, countries } = filters || {};
+
+    console.log("server : ", { languages, countries });
+
+    const books = await prisma.book.findMany({
+      where: {
+        userId: null,
+        UserBookList: {
+          none: { userId: id },
+        },
+        AND: [
+          {
+            OR: [
+              languages?.length ? { language: { in: languages } } : {},
+              countries?.length ? { country: { in: countries } } : {},
+            ],
+          },
+        ],
       },
+      take: limit || undefined,
+    });
+
+    return books;
+  }
+);
+
+// get filter data from books
+
+export const getBookFilters = cache(async () => {
+  const books = await prisma.book.findMany({
+    select: {
+      language: true,
+      country: true,
     },
-    take: limit || undefined,
   });
 
-  return books;
+  const languages = Array.from(
+    new Set(books.map((book) => book.language).filter(Boolean))
+  ).map((language, index) => ({ id: String(index + 1), label: language }));
+
+  const countries = Array.from(
+    new Set(books.map((book) => book.country).filter(Boolean))
+  ).map((country, index) => ({ id: String(index + 1), label: country }));
+
+  return { languages, countries };
 });
 
 // add to library
@@ -71,6 +107,7 @@ export const addToLibrary = async (
 ): Promise<{ success: boolean; message: string }> => {
   const user = await getAuthenticatedUser();
 
+  // Check if the book exists in the users library
   const existingBook = await prisma.userBookList.findUnique({
     where: {
       userId_bookId: {
@@ -84,6 +121,7 @@ export const addToLibrary = async (
     return { success: false, message: "Book already in Library" };
   }
 
+  // add book to user library
   const userBook = await prisma.userBookList.create({
     data: {
       bookId: bookId,
@@ -104,7 +142,7 @@ export const removeFromLibrary = async (
 ): Promise<{ success: boolean; message: string }> => {
   const user = await getAuthenticatedUser();
 
-  // 🛑 Check if the book exists in the user's library
+  // Check if the book exists in the users library
   const existingBook = await prisma.userBookList.findUnique({
     where: {
       userId_bookId: {
@@ -154,7 +192,7 @@ export const createBookAndUpdateUserBookList = async (
       },
     });
 
-    // Create UserBookList relation
+    // Create UserBookList
     await tx.userBookList.create({
       data: {
         userId: user.id,

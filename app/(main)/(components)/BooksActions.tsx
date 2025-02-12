@@ -40,12 +40,13 @@ const BooksActions = ({ bookId, userBookListId }: Props) => {
   };
 
   return (
-    <div className="flex gap-4 mt-2">
+    <div className="flex gap-4 absolute right-2 top-2 z-10">
       <Button
         disabled={loading}
         onClick={handleFavorites}
         variant={"ghost"}
         size={"icon-lg"}
+        className="text-accent hover:bg-transparent hover:text-white hover:border-white p-2 border border-transparent"
       >
         {isFav ? <IoCloseOutline /> : <MdFavoriteBorder />}
       </Button>
